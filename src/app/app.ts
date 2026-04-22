@@ -1,12 +1,18 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common'; // ESTA ES LA PIEZA QUE FALTA
+import { PokemonService } from './services/pokemon';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule], // AL PONERLO AQUÍ, EL HTML YA NO DARÁ ERROR
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('pokedex-practica');
+export class AppComponent {
+  public pokeService = inject(PokemonService);
+
+  verDetalle(poke: any) {
+    this.pokeService.seleccionarPokemon(poke);
+  }
 }
